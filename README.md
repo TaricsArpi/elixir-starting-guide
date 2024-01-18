@@ -67,11 +67,12 @@ $ asdf install elixir 1.16.0-otp-26
 !["elixir-v"](/images/installation/elixir-v.png)
 
 ## Activating Elixir and Erlang versions
-- Although we installed the versions we want, they aren’t yet activated. There are two ways to activate a version.
-    - local
-    - global
-- Set the global config:
+- At this point we still need to set the versions we want to use. 
+- When we wanted to set the global Node version with **nvm** we aliased the desired version as *default* or used the `nvm use <version>` command. On project level we used an `.nvmrc` file and defined the desired version there.
 
+- With **asdf** you also has the option to set version on both, global or local level. Here is how you do it:
+
+1. Global
 
 ```
 $ asdf global erlang 26.2.1
@@ -79,15 +80,25 @@ $ asdf global erlang 26.2.1
 $ asdf global elixir 1.16.0-otp-26
 ```
 
-# Hello World in Elixir
+2. Local
+- In you projects root directory run the following command:
 
-- Let's write our first very simple program in Elixir, the Hello World.
+```
+$ asdf local elixir 1.16.0-otp-26
+
+$ asdf local erlang 26.2.1
+```
+
+- This will create a `.tool-versions` file with the defined versions like this:
+
+!["tool-versions"](/images/installation/tool-versions.png)
+
+# Hello World in Elixir
 - First launch an IEx (Interactive Elixir) in the terminal:
 
 !["iex-launch"](/images/hello_world/iex.png)
 
-- Now you can run Elixir code in your terminal.
-- Let's just type in `IO.puts("Hello World!")` to the terminal:
+- Now you can run Elixir code in your terminal:
 
 !["elixir-hello-world-terminal"](/images/hello_world/elixir-hello-world-terminal.png)
 
@@ -104,3 +115,20 @@ $ elixir hello_world.exs
 ```
 
 !["elixir-hello-world-execution"](/images/hello_world/elixir-hello-world-file-execute.png)
+
+- Let's create or first Elixir project with the help of **mix**, which is a build tool and task runner for the Elixir programming language.
+- In your terminal run the following command:
+
+```
+$ mix new elixir_hello_world
+```
+
+
+## Where to go from here?
+- Thank you for reviewing this shprt installation guide for Elixir. Future articles on this subject will be published to provide further insights and guidance.
+- In the meantime, we recommend exploring the official documentation for Elixir and Phoenix, integral resources for in-depth knowledge:
+    - [elixir-lang.org](https://elixir-lang.org/docs.html)
+    - [elixirschool.com](https://elixirschool.com/en)
+
+- Also take a look at Phoenix, which is the most used web framework for Elixir:
+    - [Phoenix framework](https://hexdocs.pm/phoenix/Phoenix.html)
