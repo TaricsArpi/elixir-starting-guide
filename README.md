@@ -27,11 +27,7 @@ If you install incompatible versions, you might encounter issues such as:
 - **Performance Issues**: Newer versions of Erlang/OTP often come with performance improvements and bug fixes.
 - **Potential Bugs**: Running Elixir on an incompatible Erlang version may lead to unexpected behavior, errors, or even crashes due to mismatches in the underlying runtime.
 
-Checking the compatibility matrix in the [Elixir documentation](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) is a recommended approach. For optimal performance, use the Erlang version against which Elixir was compiled. To determine the necessary version, execute `elixir -v`, as illustrated below:
-
-!["elixir-v"](/images/installation/elixir-v.png)
-
-Of course it's a bit of a catch-22 situation where first you need to install Erlang based on the compatibility table, then pull the desired Elixir version, and only after that can you check if it was built with the Erlang version you have on disk. If it's not you pull the right Erlang version again and set it as the default instead of the already exisiting one. Phew, that's a mouthful. However, it's pretty quick to do this raindance and it won't often happen either. If you stick with the latest Elixir and the latest compatible Erlang, you'll be fine most of the time.
+Checking the compatibility matrix in the [Elixir documentation](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) is a recommended approach. For optimal performance, use the Erlang version against which Elixir was compiled.
 
 ## Which version manager to use?
 
@@ -41,12 +37,36 @@ To install `asdf` follow the instructions [here](https://asdf-vm.com/guide/getti
 
 Aftrer you install `asdf`, however, you're not ready to start downloading runtimes yet. Actually, `asdf` is more like a backend for multiple version managers that are called plugins in `asdf` parlance. In the following, we'll look at how to add language plugins, install Erlang and Elixir, then set the versions to be used.
 
-## Install Erlang
-First, we need to add the Erlang plugin.
+## Install Erlang and Elixir with `asdf`
+
+Let's add Erlang first
+
 
 ```
 $ asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 ```
+
+Then Elixir.
+
+```
+$ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+```
+
+Now we need to check the available Elixir versions first with `asdf list-all elixir`.
+
+!["elixir-versions"](/images/installation/elixir-list-all.png)
+
+Notice the `otp-XX` suffix at the end of version names. That's how we know against which Erlang version was the specific runtime compiled. Pick one you like, in our case, let's go with the current latest, OTP 26 in our case. 
+
+```
+$ asdf install erlang 26.2.1
+```
+
+CONTINUE FROM HERE
+
+
+## Install Erlang
+First, we need to add the Erlang plugin.
 
 Then we need to pick the Erlang version to use. Now that you're starting out, you should be fine with the latest version. However, in general you should check the Erlang/OTP version your target Elixir version is compatible with from the [compatibility table](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) we talked about before. 
 
@@ -56,23 +76,15 @@ Then list the available versions with `asdf list-all erlang`.
 
 Pick the desired version then install it (e.g. for version 26.2.1):
 
-```
-$ asdf install erlang 26.2.1
-```
 
 ## Install Elixir
-- For Elixir we need to install the asdf plugin first again:
+Again, we start with the plugin.
 
-```
-$ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
-```
 
-- List the available versions with `asdf list-all elixir` and pick the desired version
+List the available versions with and pick the desired version
 
-!["elixir-versions"](/images/installation/elixir-list-all.png)
 
-- :warning: **Please exercise caution when selecting the version. It should be compatible with the Erlang version you have installed before!** :warning:
-- In our case, let's pick the latest stable version built with the previously installed Erlang version: `1.16.0-otp-26`
+In our case, let's pick the latest stable version built with the previously installed Erlang version: `1.16.0-otp-26`. Notice the `otp-26` suffix. That's how we know it was compiled against Erlang v26. So we're good 
 
 ```
 $ asdf install elixir 1.16.0-otp-26
