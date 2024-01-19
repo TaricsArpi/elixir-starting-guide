@@ -16,18 +16,22 @@ And let's pause for a moment to talk about communicating between BEAM nodes. Ess
 
 This is why it was so straightforward for Chris McCord to implement Fly.io's [FLAME](https://fly.io/blog/rethinking-serverless-with-flame/) serverless/lambda-like service for Elixir. FLAME's spiritual predecessor, [Modal](https://modal.com/) was developed for machine learning in Python, but it took an entire company and years to complete.
 
-# How to install Elixir with asdf?
+# How to install Elixir?
 
-## Why is it important to use compatible versions?
-- When working with Elixir and Erlang, it's generally recommended to use compatible versions of both to ensure compatibility and avoid potential issues. The compatibility between Elixir and Erlang versions is crucial, as certain features or enhancements in Elixir may rely on specific Erlang/OTP releases, given their shared execution environment on the BEAM virtual machine.
-- If you install incompatible versions, you might encounter issues such as:
-    - **Functionality Breakage**: Certain Elixir features may depend on Erlang/OTP features introduced in specific versions.
-    - **Performance Issues**: Newer versions of Erlang/OTP often come with performance improvements and bug fixes.
-    - **Potential Bugs**: Running Elixir on an incompatible Erlang version may lead to unexpected behavior, errors, or even crashes due to mismatches in the underlying runtime.
-- To avoid these issues, it's a good practice to check the compatibility matrix provided by the [Elixir documentation](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp).
-- It's best to use the version of Erlang Elixir was compiled against. You can use `elixir -v` to figure out which version you need, as highlighted below:
+Just like with Node.js, you there are multiple ways to install Elixir. You can use your OS's package manager, run it with Docker, or download prebuilt binaries. However, you'll probably want to be able to control which version of Elixir you're using, so the best is to use a version manager. 
+
+## What's up with Elixir and Erlang compatibility?
+When working with Elixir and Erlang, it's generally recommended to use compatible versions of both to avoid potential issues. The compatibility between Elixir and Erlang versions is crucial, as certain features or enhancements in Elixir may rely on specific Erlang/OTP releases, given their shared execution environment on the BEAM virtual machine. 
+If you install incompatible versions, you might encounter issues such as:
+- **Functionality Breakage**: Certain Elixir features may depend on Erlang/OTP features introduced in specific versions.
+- **Performance Issues**: Newer versions of Erlang/OTP often come with performance improvements and bug fixes.
+- **Potential Bugs**: Running Elixir on an incompatible Erlang version may lead to unexpected behavior, errors, or even crashes due to mismatches in the underlying runtime.
+
+Checking the compatibility matrix in the [Elixir documentation](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) is a recommended approach. For optimal performance, use the Erlang version against which Elixir was compiled. To determine the necessary version, execute `elixir -v`, as illustrated below:
 
 !["elixir-v"](/images/installation/elixir-v.png)
+
+Of course it's a bit of a catch-22 situation where first you need to install Erlang based on the compatibility table, then pull the desired Elixir version, and only after that can you check if it was built with the Erlang version you have on disk. If it's not you pull the right Erlang version again and set it as the default instead of the already exisiting one. Phew, that's a mouthful. However, it's pretty quick to do this raindance and it won't often happen either. If you stick with the latest Elixir and the latest compatible Erlang, you'll be fine most of the time.
 
 ## Why use asdf?
 - **asdf** is a versatile version manager that supports multiple languages, including Elixir, Erlang, Node.js, Ruby, Python, and more. Using asdf can be worthwhile, especially if you are working on projects that involve multiple languages - in contrast, **nvm** is specifically designed for Node.js, focusing on simplified global and per-project version management for Node.js only
