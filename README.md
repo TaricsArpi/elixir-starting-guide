@@ -18,7 +18,7 @@ This is why it was so straightforward for Chris McCord to implement Fly.io's [FL
 
 # How to install Elixir?
 
-Just like with Node.js, you there are multiple ways to install Elixir. You can use your OS's package manager, run it with Docker, or download prebuilt binaries. However, you'll probably want to be able to control which version of Elixir you're using, so the best is to use a version manager. 
+Just like with Node.js, you there are multiple ways to install Elixir. You can use your OS's package manager, run it with Docker, or download prebuilt binaries. However, you'll probably want to be able to control which version of Elixir you're using, so the best is to use a version manager. In our experience, it's also the easiest way.
 
 ## What's up with Elixir and Erlang compatibility?
 When working with Elixir and Erlang, it's generally recommended to use compatible versions of both to avoid potential issues. The compatibility between Elixir and Erlang versions is crucial, as certain features or enhancements in Elixir may rely on specific Erlang/OTP releases, given their shared execution environment on the BEAM virtual machine. 
@@ -33,26 +33,28 @@ Checking the compatibility matrix in the [Elixir documentation](https://hexdocs.
 
 Of course it's a bit of a catch-22 situation where first you need to install Erlang based on the compatibility table, then pull the desired Elixir version, and only after that can you check if it was built with the Erlang version you have on disk. If it's not you pull the right Erlang version again and set it as the default instead of the already exisiting one. Phew, that's a mouthful. However, it's pretty quick to do this raindance and it won't often happen either. If you stick with the latest Elixir and the latest compatible Erlang, you'll be fine most of the time.
 
-## Why use asdf?
-- **asdf** is a versatile version manager that supports multiple languages, including Elixir, Erlang, Node.js, Ruby, Python, and more. Using asdf can be worthwhile, especially if you are working on projects that involve multiple languages - in contrast, **nvm** is specifically designed for Node.js, focusing on simplified global and per-project version management for Node.js only
-- If you're using asdf to manage your versions, you can set a global version for a language/tool that applies system-wide, or you can specify a version on a per-project basis using configuration files.
-- It utilizes a plugin system that allows you to extend its functionality to support additional languages or tools.
-- To install **asdf** follow the instructions [here](https://asdf-vm.com/guide/getting-started.html#_3-install-asdf)
+## Which version manager to use?
+
+You might be tempted to go the Node.js way and look for a language specific version manager. They exist, namely [`kiex`](https://github.com/taylor/kiex) for Elixir and [`kerl`](https://github.com/yrashk/kerl) for Erlnag. However, we found the easiest is to use `asdf` instead, which is a multi-language version manager that supports multiple languages, including Elixir, Erlang, Node.js, Ruby, Python, and more. The added benefit of `asdf` comes out when you work on projects that involve multiple languages - in contrast, `nvm`, `kiex`, and `kerl` are specifically designed for their respective languages. 
+
+To install `asdf` follow the instructions [here](https://asdf-vm.com/guide/getting-started.html#_3-install-asdf)
+
+Aftrer you install `asdf`, however, you're not ready to start downloading runtimes yet. Actually, `asdf` is more like a backend for multiple version managers that are called plugins in `asdf` parlance. In the following, we'll look at how to add language plugins, install Erlang and Elixir, then set the versions to be used.
 
 ## Install Erlang
-- The version of Erlang is often referred as the OTP version. You can go a long way with Elixir without understanding what OTP is. Just remember that Erlang/OTP is often used a bit similarly to GNU/Linux and its relation to Erlang is also similar to GNU's relation to Linux.
-- First we need to install the asdf plugin that installs Erlang and manages the versions for us.
-- The following command adds the Erlang plugin:
+First, we need to add the Erlang plugin.
 
 ```
 $ asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 ```
 
-- You can run an `asdf list-all erlang` command: 
+Then we need to pick the Erlang version to use. Now that you're starting out, you should be fine with the latest version. However, in general you should check the Erlang/OTP version your target Elixir version is compatible with from the [compatibility table](https://hexdocs.pm/elixir/1.12/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp) we talked about before. 
+
+Then list the available versions with `asdf list-all erlang`.
 
 !["erlang-versions"](/images/installation/erlang-list-all.png)
 
-- Pick the desired version for Erlang to install with the following command (e.g. for version 26.2.1):
+Pick the desired version then install it (e.g. for version 26.2.1):
 
 ```
 $ asdf install erlang 26.2.1
@@ -81,6 +83,7 @@ $ asdf install elixir 1.16.0-otp-26
 !["elixir-v"](/images/installation/elixir-v.png)
 
 ## Activating Elixir and Erlang versions
+Unlike `nvm`, `asdf` makes it seamless to use project local versions. With `nvm` you create a `.nvmrc` file and whenever you enter the project root directory you need to run `nvm use` to switch to the proper node versio. With `asdf` you can set project local and system-wide global versions. (More on that later.) 
 - At this point we still need to set the versions we want to use. 
 - When we wanted to set the global Node version with **nvm** we aliased the desired version as *default* or used the `nvm use <version>` command. On project level we used an `.nvmrc` file and defined the desired version there.
 
